@@ -2,6 +2,8 @@
  * @author: @AngularClass
  */
 
+var WriteFilePlugin = require('write-file-webpack-plugin');
+
 const helpers = require('./helpers');
 const webpackMerge = require('webpack-merge'); // used to merge webpack configs
 const commonConfig = require('./webpack.common.js'); // the settings that are common to prod and dev
@@ -50,7 +52,7 @@ module.exports = webpackMerge(commonConfig, {
    * See: http://webpack.github.io/docs/configuration.html#devtool
    * See: https://github.com/webpack/docs/wiki/build-performance#sourcemaps
    */
-  devtool: 'cheap-module-source-map',
+  devtool: 'cheap-module-inline-source-map',
 
   /**
    * Options affecting the output of the compilation.
@@ -72,22 +74,34 @@ module.exports = webpackMerge(commonConfig, {
      *
      * See: http://webpack.github.io/docs/configuration.html#output-filename
      */
-    filename: '[name].bundle.js',
-
+    //filename: '[name].bundle.js',
+    filename: '[name].js',
     /**
      * The filename of the SourceMaps for the JavaScript files.
      * They are inside the output.path directory.
      *
      * See: http://webpack.github.io/docs/configuration.html#output-sourcemapfilename
      */
-    sourceMapFilename: '[name].map',
+    //sourceMapFilename: '[name].map',
+    sourceMapFilename: '[name].js.map',
 
     /** The filename of non-entry chunks as relative path
      * inside the output.path directory.
      *
      * See: http://webpack.github.io/docs/configuration.html#output-chunkfilename
      */
-    chunkFilename: '[id].chunk.js'
+    chunkFilename: '[id].chunk.js',
+    devtoolModuleFilenameTemplate: function(info){
+      var resourcePath = info.absoluteResourcePath;
+      if (resourcePath.indexOf(__dirname) !== 0){
+        resourcePath = helpers.root(resourcePath);
+      }
+      if (resourcePath.charAt(0) === '/'){
+        return 'file://' + resourcePath;
+      }else{
+        return 'file:///' + resourcePath;
+      }
+    }
 
   },
 
@@ -111,7 +125,8 @@ module.exports = webpackMerge(commonConfig, {
         'NODE_ENV': JSON.stringify(METADATA.ENV),
         'HMR': METADATA.HMR,
       }
-    })
+    }),
+    new WriteFilePlugin()
   ],
 
   /**

@@ -30,7 +30,7 @@ export class Home {
   localState = { value: '' };
   // TypeScript public modifiers
   constructor(public appState: AppState, public title: Title) {
-
+    
   }
 
   ngOnInit() {

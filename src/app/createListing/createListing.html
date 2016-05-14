@@ -2,4 +2,17 @@
     <h1>
         Create Listing
     </h1>
+    <div>
+        <md-input [(ngModel)]="listing.title" placeholder="Title">
+        </md-input>
+    </div>
+    <div>
+        <md-input [(ngModel)]="listing.description" placeholder="Description">
+        </md-input>
+    </div>
+    <div>
+        <md-input [(ngModel)]="listing.price" placeholder="Price">
+        </md-input>
+    </div>
+    <button (click)="addListing()">Add Listing</button> 
 </md-card>

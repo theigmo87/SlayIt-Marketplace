@@ -1,20 +1,10 @@
 {
-    "listings": [{
-        "id": 1,
-        "title": "Laptop",
-        "description": "2009 MacBook Pro 13\".",
-        "price": "$300"
-    },
-    {
-        "id": 2,
-        "title": "Nexus 9",
-        "description": "Year old tablet, not much use.",
-        "price": "$200"
-    },
-    {
-        "id": 3,
-        "title": "Table",
-        "description": "Square high top table, 4 chairs.",
-        "price": "$250"
-    }]
+    "listings":[
+        {
+            "id": 123,
+            "title": "Macbook pro 2009",
+            "description": "works great, good condition, battery could use some help but will go for an hour to hour and a half.",
+            "price": 300.00
+        }
+    ]
 }

@@ -1,5 +1,8 @@
 # @AngularClass
 
+# VS Code
+.vscode/chrome/
+
 # Logs
 logs
 *.log

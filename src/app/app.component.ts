@@ -8,6 +8,7 @@ import { AppState } from './app.service';
 import { Home } from './home';
 import { RouterActive } from './router-active';
 import { CreateListing } from './createListing';
+import { Listings } from './listings';
 
 /*
  * App Component
@@ -93,7 +94,7 @@ import { CreateListing } from './createListing';
   { path: '/home',  name: 'Home',  component: Home },
   // Async load a component using Webpack's require with es6-promise-loader and webpack `require`
   { path: '/about', name: 'About', loader: () => require('es6-promise!./about')('About') },
-  { path: '/listings', name: 'Listings', loader: () => require('es6-promise!./listings')('Listings') },
+  { path: '/listings', name: 'Listings', component: Listings },
   { path: '/createListing', name: 'CreateListing', component: CreateListing }
 ])
 export class App {
@@ -101,7 +102,6 @@ export class App {
   loading = false;
   name = 'SlayIt MarketPlace';
   url = 'https://twitter.com/AngularClass';
-
   constructor(
     public appState: AppState) {
 
@@ -109,6 +109,10 @@ export class App {
 
   ngOnInit() {
     console.log('Initial App State', this.appState.state);
+    if (!this.appState.state.listings){
+      var mockData = require('assets/mock-data/mock-listings.json');
+      this.appState.set("listings", mockData.listings);
+    }
   }
 
 }
