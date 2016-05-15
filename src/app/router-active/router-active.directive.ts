@@ -10,6 +10,7 @@ import {
 } from '@angular/core';
 import { isPresent } from '@angular/core/src/facade/lang';
 import { Instruction, Router, RouterLink } from '@angular/router-deprecated';
+import { AuthRouterOutlet } from '../directives/authRouterOutlet.directive';
 
 /**
  * RouterActive dynamically finds the first element with routerLink and toggles the active class
@@ -27,16 +28,35 @@ import { Instruction, Router, RouterLink } from '@angular/router-deprecated';
 export class RouterActive {
   @Input() routerActive: string = undefined;
   routerActiveAttr: string = 'active';
-
+  authenicatedRoutes: any;
   constructor(
     public router: Router,
     public element: ElementRef,
     public renderer: Renderer,
     @Query(RouterLink) public routerLink: QueryList<RouterLink>,
     @Optional() @Attribute('router-active') routerActiveAttr?: string) {
-
-      this.routerActiveAttr = this._defaultAttrValue(routerActiveAttr);
+      
+    this.routerActiveAttr = this._defaultAttrValue(routerActiveAttr);
+    this.authenicatedRoutes = {
+      '/': true,
+      '/listings': true,
+      '/createListing': true,
+      '/myListings':true
+    };
   }
+  
+  // publicRoutes will be the routes auth is not needed for.
+
+  // activate(instruction: ComponentInstruction) {
+  //   var url = this.parentRouter.lastNavigationAttempt;
+  //   if (this.privateRoutes[url]){ //&& this._userService.authenticated()) {
+  //       // todo: redirect to Login, may be there a better way?
+  //       // we return super.activate(instruction) here so the router can activate the requested route and it's components.
+  //       return super.activate(instruction);  
+  //   }
+  //   return super.activate(instruction);  
+  //   //this.parentRouter.navigateByUrl('/login');
+  // }
 
   ngOnInit() {
     this.routerLink.changes.subscribe(() => {

@@ -1,18 +1,30 @@
 <md-card>
-    <h1>
-        Create Listing
-    </h1>
-    <div>
-        <md-input [(ngModel)]="listing.title" placeholder="Title">
-        </md-input>
-    </div>
-    <div>
-        <md-input [(ngModel)]="listing.description" placeholder="Description">
-        </md-input>
-    </div>
-    <div>
-        <md-input [(ngModel)]="listing.price" placeholder="Price">
-        </md-input>
-    </div>
-    <button (click)="addListing()">Add Listing</button> 
-</md-card>
+    <md-card-title>Create Listing</md-card-title>
+    <md-card-content>
+
+      <form (ngSubmit)="addListing(localListing)" autocomplete="off">
+        <div>
+            <md-input
+                placeholder="Title"
+                [value]="localListing.title"
+                (input)="localListing.title = $event.target.value"
+                autofocus>
+            </md-input>
+        </div>
+        <div>
+            <md-input
+                placeholder="Description"
+                [value]="localListing.description"
+                (input)="localListing.description = $event.target.value">
+            </md-input>
+        </div>
+        <div>
+            <md-input
+                placeholder="Price"
+                [value]="localListing.price"
+                (input)="localListing.price = $event.target.value">
+            </md-input>
+        </div>
+        <button md-raised-button color="primary">Create Listing</button>
+      </form>
+<md-card>

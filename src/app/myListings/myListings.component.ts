@@ -13,21 +13,29 @@ import { AngularFire, FirebaseListObservable } from 'angularfire2';
  */
 
 @Component({
-  selector: 'listings',
+  selector: 'myListings',
   styles: [],
-  template: require('./listings.html')
+  template: require('./myListings.html')
 })
 
 @CanActivate(() => tokenNotExpired())
   
-export class Listings {
-  listings: FirebaseListObservable<any[]>;
+export class MyListings {
+  listings: FirebaseListObservable<any>;
   
-  constructor(public listingsService: ListingsService, af: AngularFire, public appState: AppState) {
-    this.listings = listingsService.getAll();
+  constructor(public listingsService: ListingsService, public appState: AppState, public af: AngularFire) {
+    this.listings = listingsService.getMyListings();
   }
 
   ngOnInit() {
     
+  }
+
+  editListing(key: string) {
+    console.log(key);
+  }
+
+  deleteListing(key: string) {
+    this.listingsService.remove(key);
   }
 }

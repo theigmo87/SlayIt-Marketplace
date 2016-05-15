@@ -1,29 +1,36 @@
+import { ROUTER_DIRECTIVES, CanActivate} from 'angular2/router';
+import { AuthHttp, tokenNotExpired } from 'angular2-jwt';
 import { Component } from '@angular/core';
-import { Listing } from './listing';
+import { Router } from 'angular2/router';
+
 import { AppState } from '../app.service';
+import { Listing } from '../models/listing';
+import { ListingsService } from '../services/listings.service';
 
 @Component({
   selector: 'createListing',
   styles: [],
   template: require('./createListing.html')
 })
+
+@CanActivate(() => tokenNotExpired())
 export class CreateListing {
-  listing: Listing;
+  localListing: Listing;
   
-  constructor(public appState: AppState) {
-    
+  constructor(public listingsService: ListingsService, public router: Router, public appState: AppState) {
+    this.localListing = new Listing();
   }
 
   ngOnInit() {
-    this.listing = new Listing();
+
   }
   
-  addListing(){
-    let listings: Listing[] = this.appState.get("listings");
-    this.listing.id = new Date().getTime();
-    listings.push(this.listing);
-    this.appState.set("listings", listings);
-    this.listing = new Listing();
+  addListing(listing: Listing) {
+    console.log(this.appState.user);
+    listing.user_id = this.appState.user.user_id;
+    console.log(listing);
+    this.listingsService.add(listing);
+    this.router.parent.navigate(['Listings']);
+    this.localListing = new Listing();
   }
-  
 }

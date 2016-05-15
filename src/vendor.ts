@@ -28,6 +28,9 @@ import '@angular2-material/progress-circle';
 import '@angular2-material/toolbar';
 // look in src/platform/angular2-material2 and src/platform/providers
 
+import 'angular2-jwt';
+import 'firebase/lib';
+
 if ('production' === ENV) {
   // Production
 

@@ -1,6 +1,6 @@
 
 <md-card>
-    <md-card-title>Listings</md-card-title>
+    <md-card-title>My Listings</md-card-title>
     <md-card-content>
     <table>
       <thead>
@@ -14,6 +14,12 @@
           <th>
             Price
           </th>
+          <th>
+            Edit
+          </th>
+          <th>
+            Delete>
+          </th>
         </tr>
       </thead>
       <tbody>
@@ -26,6 +32,16 @@
           </td>
           <td>
               {{item.price}}
+          </td>
+          <td>
+              <button md-button-raised (click)="editListing(item.$key)">
+                Edit
+              </button>
+          </td>
+          <td>
+              <button md-button-raised (click)="deleteListing(item.$key)">
+                Delete
+              </button>
           </td>
         </tr>
       </tbody>

@@ -3,12 +3,16 @@
  */
 import { Component, ViewEncapsulation } from '@angular/core';
 import { RouteConfig, Router } from '@angular/router-deprecated';
+import { Auth } from './services/auth.service';
 
 import { AppState } from './app.service';
 import { Home } from './home';
 import { RouterActive } from './router-active';
+import { AuthRouterOutlet } from './directives/authRouterOutlet.directive';
 import { CreateListing } from './createListing';
 import { Listings } from './listings';
+import { MyListings } from './myListings';
+import { Login } from './login';
 
 /*
  * App Component
@@ -17,7 +21,7 @@ import { Listings } from './listings';
 @Component({
   selector: 'app',
   pipes: [ ],
-  providers: [ ],
+  providers: [ Auth ],
   directives: [ RouterActive ],
   encapsulation: ViewEncapsulation.None,
   styles: [
@@ -62,25 +66,32 @@ import { Listings } from './listings';
       <md-toolbar color="primary">
           <span>{{ name }}</span>
           <span class="fill"></span>
-          <button md-button router-active [routerLink]=" ['Index'] ">
-            Index
-          </button>
-          <button md-button router-active [routerLink]=" ['Home'] ">
-            Home
-          </button>
-          <button md-button router-active [routerLink]=" ['Listings'] ">
+          <button md-button router-active [routerLink]=" ['Listings'] " *ngIf="auth.authenticated()">
             Listings
           </button>
-          <button md-button router-active [routerLink]=" ['CreateListing'] ">
+          <button md-button router-active [routerLink]=" ['MyListings'] " *ngIf="auth.authenticated()">
+            My Listings
+          </button>
+          <button md-button router-active [routerLink]=" ['CreateListing'] " *ngIf="auth.authenticated()">
             Create Listing
           </button>
+          <button md-button (click)="auth.login()" *ngIf="!auth.authenticated()">
+            Log In
+          </button>
+          <button md-button (click)="auth.logout()" *ngIf="auth.authenticated()">
+            Log Out
+          </button>
+          <span *ngIf="auth.authenticated()" style="font-size:14px; margin-left:8px;">
+            {{ appState.user.name }}
+          </span>
+          <span *ngIf="auth.authenticated() && appState.user.picture" >
+            <img [src]="appState.user.picture" style="height:48px; width:auto; border-radius:50%; margin-left:16px;" />
+          </span>
       </md-toolbar>
       
       <md-progress-bar mode="indeterminate" color="primary" *ngIf="loading"></md-progress-bar>
 
       <router-outlet></router-outlet>
-
-      <pre class="app-state">this.appState.state = {{ appState.state | json }}</pre>
 
       <footer>
         <img [src]="angularclassLogo" width="6%">
@@ -90,31 +101,27 @@ import { Listings } from './listings';
   `
 })
 @RouteConfig([
-  { path: '/',      name: 'Index', component: Home, useAsDefault: true },
-  { path: '/home',  name: 'Home',  component: Home },
-  // Async load a component using Webpack's require with es6-promise-loader and webpack `require`
-  { path: '/about', name: 'About', loader: () => require('es6-promise!./about')('About') },
-  { path: '/listings', name: 'Listings', component: Listings },
-  { path: '/createListing', name: 'CreateListing', component: CreateListing }
+    { path: '/', name: 'Home', component: Login },
+    { path: '/login', name: "Login", component: Login },
+    { path: '/listings', name: 'Listings', component: Listings, useAsDefault: true },
+    { path: '/myListings', name:'MyListings', component: MyListings },
+    { path: '/createListing', name: 'CreateListing', component: CreateListing }
 ])
 export class App {
   angularclassLogo = 'assets/img/angularclass-avatar.png';
   loading = false;
   name = 'SlayIt MarketPlace';
   url = 'https://twitter.com/AngularClass';
-  constructor(
-    public appState: AppState) {
 
+  constructor(
+    public appState: AppState,
+    private auth: Auth) {
+      
   }
 
   ngOnInit() {
     console.log('Initial App State', this.appState.state);
-    if (!this.appState.state.listings){
-      var mockData = require('assets/mock-data/mock-listings.json');
-      this.appState.set("listings", mockData.listings);
-    }
   }
-
 }
 
 /*

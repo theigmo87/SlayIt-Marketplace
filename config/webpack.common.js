@@ -83,7 +83,10 @@ module.exports = {
       'angular2/platform/browser': helpers.root('node_modules/@angular/platform-browser/index.js'),
       'angular2/router': helpers.root('node_modules/@angular/router-deprecated/index.js'),
       'angular2/http': helpers.root('node_modules/@angular/http/index.js'),
-      'angular2/http/testing': helpers.root('node_modules/@angular/http/testing.js')
+      'angular2/http/testing': helpers.root('node_modules/@angular/http/testing.js'),
+      'angular2-jwt': helpers.root('node_modules/angular2-jwt/angular2-jwt.js'),
+      'firebase/lib': helpers.root('node_modules/firebase/lib/firebase-web.js'),
+      'angularfire2': helpers.root('node_modules/angularfire2/angularfire2.js')
     },
 
   },
