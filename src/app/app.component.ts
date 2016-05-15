@@ -121,7 +121,7 @@ export class App {
   constructor(
     public appState: AppState,
     private auth: Auth) {
-    //auth.logout();
+    auth.logout();
   }
 
   ngOnInit() {
