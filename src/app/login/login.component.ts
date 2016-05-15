@@ -23,10 +23,6 @@ export class Login {
     this.auth.login();
   }
 
-  register() {
-    
-  }
-
   logout() {
     this.auth.logout();
   }

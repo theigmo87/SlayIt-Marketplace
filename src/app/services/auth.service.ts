@@ -42,13 +42,24 @@ export class Auth {
 
     public logout() {
         localStorage.removeItem('id_token');
+        localStorage.removeItem('profile');
         this.appState.remove('user');
         this.zoneImpl.run(() => this.user = null);
         this.router.navigate(['Home']);
     }
 
+    public checkAuthOnStartup() {
+        if (this.authenticated()) {
+            var profile = JSON.parse(localStorage.getItem('profile'));
+            var _user = new User(profile);
+            var loginInfo = this.af.database.object("/logins/" + _user.user_id);
+            loginInfo.subscribe(snapshot => snapshot == null ? this.register(_user) : this.loginSuccessful(_user));
+        }
+    }
+
     private authenticationSuccessful(profile: any, token: string) {
         localStorage.setItem('id_token', token);
+        localStorage.setItem('profile', JSON.stringify(profile));
         var _user = new User(profile);
         var loginInfo = this.af.database.object("/logins/" + _user.user_id);
         loginInfo.subscribe(snapshot => snapshot == null ? this.register(_user) : this.loginSuccessful(_user));
