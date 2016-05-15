@@ -10,7 +10,6 @@ import {
 } from '@angular/core';
 import { isPresent } from '@angular/core/src/facade/lang';
 import { Instruction, Router, RouterLink } from '@angular/router-deprecated';
-import { AuthRouterOutlet } from '../directives/authRouterOutlet.directive';
 
 /**
  * RouterActive dynamically finds the first element with routerLink and toggles the active class

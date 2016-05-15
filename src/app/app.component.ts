@@ -52,14 +52,18 @@ import { Login } from './login';
       flex-direction: column;
       height: 100%;
     }
+    div.contentContainer{
+      width:980px;
+      margin:48px auto;
+    }
     footer{
       flex: 0 0 60px;
       padding: 10px;
       display: flex;
       align-items: center;
       justify-content: center;
-      background: #fff;
     }`
+    
   ],
   template: `
     <md-content>
@@ -75,9 +79,6 @@ import { Login } from './login';
           <button md-button router-active [routerLink]=" ['CreateListing'] " *ngIf="auth.authenticated()">
             Create Listing
           </button>
-          <button md-button (click)="auth.login()" *ngIf="!auth.authenticated()">
-            Log In
-          </button>
           <button md-button (click)="auth.logout()" *ngIf="auth.authenticated()">
             Log Out
           </button>
@@ -88,14 +89,18 @@ import { Login } from './login';
             <img [src]="appState.user.picture" style="height:48px; width:auto; border-radius:50%; margin-left:16px;" />
           </span>
       </md-toolbar>
+      <div class="contentContainer">
+        <!-- Routed views go here -->
+        <router-outlet></router-outlet>
+      </div>
       
+
       <md-progress-bar mode="indeterminate" color="primary" *ngIf="loading"></md-progress-bar>
 
-      <router-outlet></router-outlet>
-
       <footer>
-        <img [src]="angularclassLogo" width="6%">
-        WebPack Angular 2 Starter by <a [href]="url">@AngularClass</a>
+        <p>
+          Made by me, Jimmy G!
+        </p>
       </footer>
       </md-content>
   `
@@ -116,7 +121,7 @@ export class App {
   constructor(
     public appState: AppState,
     private auth: Auth) {
-      
+    //auth.logout();
   }
 
   ngOnInit() {

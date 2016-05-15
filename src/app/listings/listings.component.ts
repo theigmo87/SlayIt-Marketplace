@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 import { ListingsService } from '../services/listings.service';
 import { Listing } from '../models/listing';
 import { ROUTER_DIRECTIVES, CanActivate} from 'angular2/router';

@@ -5,7 +5,7 @@ import { User } from './models/user';
 @Injectable()
 export class AppState {
   // @HmrState() is used by HMR to track the state of any object during a hot module replacement
-  //@HmrState() _state = {};
+  @HmrState() _state = { };
 
   constructor() {
 
@@ -13,14 +13,8 @@ export class AppState {
 
   // already return a clone of the current state
   get state() {
-    var state = localStorage.getItem("slayItAppState");
-    if (!state) {
-      var mockData = require('assets/mock-data/mock-listings.json');
-      localStorage.setItem("slayItAppState", JSON.stringify(mockData));
-    }
-    return this._clone(JSON.parse(localStorage.getItem("slayItAppState")));
+    return this._state = this._clone(this._state);
   }
-  
   // never allow mutation
   set state(value) {
     throw new Error('do not mutate the `.state` directly');
@@ -28,15 +22,13 @@ export class AppState {
 
   get(prop?: any) {
     // use our state getter for the clone
-    const state = JSON.parse(localStorage.getItem("slayItAppState"));
+    const state = this.state;
     return state[prop] || state;
   }
 
   set(prop: string, value: any) {
     // internally mutate our state
-    var newState = this.state;
-    newState[prop] = value;
-    localStorage.setItem("slayItAppState", JSON.stringify(newState));
+    return this._state[prop] = value;
   }
 
   get user() : User {
@@ -44,11 +36,8 @@ export class AppState {
   }
 
   remove(prop: string) {
-    var newState = this.state;
-    if (newState[prop]) {
-      delete newState[prop];
-      localStorage.setItem("slayItAppState", JSON.stringify(newState));
-    }
+    if (this._state[prop])
+      this._state[prop];
   }  
 
   _clone(object) {
