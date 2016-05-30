@@ -86,7 +86,7 @@ module.exports = {
       'angular2/http/testing': helpers.root('node_modules/@angular/http/testing.js'),
       'angular2-jwt': helpers.root('node_modules/angular2-jwt/angular2-jwt.js'),
       'firebase/lib': helpers.root('node_modules/firebase/lib/firebase-web.js'),
-      'angularfire2': helpers.root('node_modules/angularfire2/angularfire2.js')
+      'angularfire2': helpers.root('node_modules/angularfire2/angularfire2.js'),
     },
 
   },

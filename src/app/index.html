@@ -1,0 +1,50 @@
+<md-sidenav-layout>
+    <md-sidenav #start>
+        Start Sidenav.
+        <br>
+        <button md-button (click)="start.close()">Close</button>
+    </md-sidenav>
+    <md-sidenav #end align="end">
+        End Sidenav.
+        <button md-button (click)="end.close()">Close</button>
+    </md-sidenav>
+    <md-content>
+        <md-toolbar color="primary">
+            <span (click)="start.open()">{{ name }}</span>
+            <span class="fill"></span>
+            <button md-button router-active [routerLink]=" ['Listings'] " *ngIf="auth.authenticated()">
+            Listings
+            </button>
+            <button md-button router-active [routerLink]=" ['MyListings'] " *ngIf="auth.authenticated()">
+            My Listings
+            </button>
+            <button md-button router-active [routerLink]=" ['CreateListing'] " *ngIf="auth.authenticated()">
+            Create Listing
+            </button>
+            <button md-button (click)="auth.logout()" *ngIf="auth.authenticated()">
+            Log Out
+            </button>
+            <span *ngIf="auth.authenticated()" (click)="end.open()" style="font-size:14px; margin-left:8px;">
+            {{ appState.user.name }}
+            </span>
+            <span *ngIf="auth.authenticated() && appState.user.picture" >
+            <img [src]="appState.user.picture" style="height:48px; width:auto; border-radius:50%; margin-left:16px;" />
+            </span>
+        </md-toolbar>
+        <div class="contentContainer">
+            <!-- Routed views go here -->
+            <router-outlet></router-outlet>
+        </div>
+        
+
+        <md-progress-bar mode="indeterminate" color="primary" *ngIf="loading"></md-progress-bar>
+        <button #mainFab md-fab color="warn" class="mainFab">
+            <i class="material-icons">add</i>
+        </button>
+        <footer>
+            <p>
+            Made by me, Jimmy G!
+            </p>
+        </footer>
+    </md-content>
+</md-sidenav-layout>

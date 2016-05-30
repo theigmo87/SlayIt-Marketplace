@@ -30,6 +30,15 @@ import { Login } from './login';
       height: 100%;
       background: #F4FAFA;
     }
+
+    md-content{
+      min-height:100vh;
+    }
+
+    md-sidenav{
+      width:250px;
+    }
+
     button.active{
       background: #fff;
       color: #009688;
@@ -56,6 +65,13 @@ import { Login } from './login';
       width:980px;
       margin:48px auto;
     }
+    
+    .mainFab{
+      position:fixed !important; 
+      bottom:64px;
+      right:64px;
+    }
+
     footer{
       flex: 0 0 60px;
       padding: 10px;
@@ -65,45 +81,7 @@ import { Login } from './login';
     }`
     
   ],
-  template: `
-    <md-content>
-      <md-toolbar color="primary">
-          <span>{{ name }}</span>
-          <span class="fill"></span>
-          <button md-button router-active [routerLink]=" ['Listings'] " *ngIf="auth.authenticated()">
-            Listings
-          </button>
-          <button md-button router-active [routerLink]=" ['MyListings'] " *ngIf="auth.authenticated()">
-            My Listings
-          </button>
-          <button md-button router-active [routerLink]=" ['CreateListing'] " *ngIf="auth.authenticated()">
-            Create Listing
-          </button>
-          <button md-button (click)="auth.logout()" *ngIf="auth.authenticated()">
-            Log Out
-          </button>
-          <span *ngIf="auth.authenticated()" style="font-size:14px; margin-left:8px;">
-            {{ appState.user.name }}
-          </span>
-          <span *ngIf="auth.authenticated() && appState.user.picture" >
-            <img [src]="appState.user.picture" style="height:48px; width:auto; border-radius:50%; margin-left:16px;" />
-          </span>
-      </md-toolbar>
-      <div class="contentContainer">
-        <!-- Routed views go here -->
-        <router-outlet></router-outlet>
-      </div>
-      
-
-      <md-progress-bar mode="indeterminate" color="primary" *ngIf="loading"></md-progress-bar>
-
-      <footer>
-        <p>
-          Made by me, Jimmy G!
-        </p>
-      </footer>
-      </md-content>
-  `
+  template: require('./index.html')
 })
 @RouteConfig([
     { path: '/', name: 'Home', component: Login },
@@ -115,7 +93,7 @@ import { Login } from './login';
 export class App {
   angularclassLogo = 'assets/img/angularclass-avatar.png';
   loading = false;
-  name = 'SlayIt MarketPlace';
+  name = 'SlayIt MarketPlace'; 
   url = 'https://twitter.com/AngularClass';
 
   constructor(
